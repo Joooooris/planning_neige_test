@@ -1,0 +1,814 @@
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Planning neige 2026-2027</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout : poste de pilotage du service hivernal — barre fixe, frise de la saison (19 semaines),
+   puis grille sites × jours groupée par échéance (avant 05h00 / avant 08h00 / après 08h00). */
+:root{
+  --bg:#EDF1F5; --surface:#FFFFFF; --surface-2:#F5F8FB; --ink:#10212F; --muted:#586A7A; --line:#D2DBE4; --line-2:#E5EBF1;
+  --brand:#14344F; --pri:#14344F; --pri-ink:#FFFFFF; --brand-ink:#F4F8FB; --brand-dim:#A9BDCE; --focus:#2F7FC1; --scrim:rgba(8,18,28,.5);
+  --signal:#E8590C;
+  --p1:#C93A29; --p1-bg:#FBE6E2; --p2:#96690A; --p2-bg:#FFF1C2; --p3:#236CA8; --p3-bg:#E1EEF9;
+  --ok:#1B7F53; --ok-bg:#DDF2E7; --sub:#0B6F78; --sub-bg:#D9F0F1; --auto:#6240B8; --auto-bg:#EBE5FA;
+  --bad:#B4261B; --bad-bg:#FBE3E0; --bad-solid:#C4281C; --on-solid:#FFFFFF; --pin:#14344F; --pin-bg:#DFE8F1;
+  --dot-ok:#5FD39C; --dot-warn:#FFC857; --dot-bad:#FF8A7B;
+  --shadow:0 1px 2px rgba(16,33,47,.08),0 12px 32px rgba(16,33,47,.14);
+  --f-display:'Barlow Condensed','Arial Narrow','Roboto Condensed',system-ui,sans-serif;
+  --f-body:'Barlow',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,'Cascadia Mono',Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0A131B; --surface:#111D28; --surface-2:#172532; --ink:#E4ECF3; --muted:#8FA2B3; --line:#27394A; --line-2:#1C2C3B;
+  --brand:#0D2236; --pri:#A6C8E8; --pri-ink:#0A131B; --brand-ink:#E8F0F7; --brand-dim:#8EA6BA; --focus:#6FB4EE; --scrim:rgba(0,0,0,.6);
+  --signal:#FF8A3D;
+  --p1:#FF8B79; --p1-bg:#3B1B17; --p2:#F0C257; --p2-bg:#372C0E; --p3:#76B8EF; --p3-bg:#122B40;
+  --ok:#55C792; --ok-bg:#113324; --sub:#58C6CE; --sub-bg:#0E3034; --auto:#AB93F2; --auto-bg:#271F47;
+  --bad:#FF8375; --bad-bg:#3E1714; --bad-solid:#D4392C; --on-solid:#FFFFFF; --pin:#A6C8E8; --pin-bg:#1A3147;
+  --dot-ok:#5FD39C; --dot-warn:#FFC857; --dot-bad:#FF8A7B;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 32px rgba(0,0,0,.5); color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#0A131B; --surface:#111D28; --surface-2:#172532; --ink:#E4ECF3; --muted:#8FA2B3; --line:#27394A; --line-2:#1C2C3B;
+  --brand:#0D2236; --pri:#A6C8E8; --pri-ink:#0A131B; --brand-ink:#E8F0F7; --brand-dim:#8EA6BA; --focus:#6FB4EE; --scrim:rgba(0,0,0,.6);
+  --signal:#FF8A3D;
+  --p1:#FF8B79; --p1-bg:#3B1B17; --p2:#F0C257; --p2-bg:#372C0E; --p3:#76B8EF; --p3-bg:#122B40;
+  --ok:#55C792; --ok-bg:#113324; --sub:#58C6CE; --sub-bg:#0E3034; --auto:#AB93F2; --auto-bg:#271F47;
+  --bad:#FF8375; --bad-bg:#3E1714; --bad-solid:#D4392C; --on-solid:#FFFFFF; --pin:#A6C8E8; --pin-bg:#1A3147;
+  --dot-ok:#5FD39C; --dot-warn:#FFC857; --dot-bad:#FF8A7B;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 32px rgba(0,0,0,.5); color-scheme:dark }
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:400 14px/1.45 var(--f-body);-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--brand)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+h1,h2,h3,p{margin:0}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.ic{flex:none;vertical-align:-2px}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+
+/* ---- barre ---- */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--brand);color:var(--brand-ink)}
+.bar-in{max-width:1500px;margin:0 auto;padding-block:9px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;align-items:center;gap:8px 22px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.brand-m{width:34px;height:34px;border-radius:9px;border:1.5px solid var(--brand-dim);display:grid;place-items:center;color:var(--brand-ink)}
+.brand-t{font:700 21px/1 var(--f-display);letter-spacing:.03em;text-transform:uppercase}
+.brand-s{font-size:12px;color:var(--brand-dim);margin-top:2px}
+.tabs{display:flex;gap:2px;padding:3px;border-radius:10px;border:1px solid var(--brand-dim);max-width:100%;overflow-x:auto}
+.tab{color:inherit;text-decoration:none;padding:5px 14px;border-radius:7px;font:600 15px/1.2 var(--f-display);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.tab[aria-current="page"]{background:var(--brand-ink);color:var(--brand)}
+.bar-r{margin-left:auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.sync{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--brand-dim)}
+.sync i{width:8px;height:8px;border-radius:50%;background:var(--dot-warn)}
+.sync.ok i{background:var(--dot-ok)} .sync.bad i{background:var(--dot-bad)}
+.bar .btn{background:transparent;border-color:var(--brand-dim);color:var(--brand-ink)}
+
+/* ---- page ---- */
+.wrap{max-width:1500px;margin:0 auto;padding-block:18px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:16px}
+.tools{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
+.tools .sp{flex:1 1 0}
+.h1{font:700 30px/1.05 var(--f-display);letter-spacing:.01em;text-transform:uppercase;text-wrap:balance}
+.h1 small{display:block;font:600 13px/1.3 var(--f-display);letter-spacing:.12em;color:var(--muted);margin-bottom:3px}
+.h2{font:700 18px/1.15 var(--f-display);letter-spacing:.06em;text-transform:uppercase}
+.muted{color:var(--muted)} .mono{font-family:var(--f-mono);font-weight:500}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:36px;padding:6px 13px;border-radius:9px;border:1px solid var(--line);background:var(--surface);font-weight:600;text-decoration:none;color:var(--ink);white-space:nowrap}
+.btn:hover{background:var(--surface-2)}
+.btn.pri{background:var(--pri);border-color:var(--pri);color:var(--pri-ink)}
+.btn.pri:hover{filter:brightness(1.15)}
+.btn.danger{color:var(--bad);border-color:var(--bad)}
+.btn.sm{min-height:30px;padding:3px 10px;font-size:13px;border-radius:8px}
+.btn.icon{padding:6px;min-width:36px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.navg{display:inline-flex;gap:4px}
+.in{border:1px solid var(--line);background:var(--surface);border-radius:9px;padding:7px 10px;min-height:36px;max-width:100%}
+select.in{padding-right:26px}
+
+.note{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;display:flex;gap:10px 14px;align-items:center;flex-wrap:wrap}
+.note.ex{border-style:dashed;border-color:var(--auto);background:var(--auto-bg)}
+.note.warn{border-color:var(--p2);background:var(--p2-bg)}
+.note p{flex:1 1 260px;min-width:0}
+.empty{border:1px dashed var(--line);border-radius:14px;padding:38px 20px;text-align:center;display:flex;flex-direction:column;gap:10px;align-items:center;background:var(--surface)}
+.empty p{max-width:52ch;color:var(--muted)}
+
+/* ---- frise de la saison ---- */
+.season-wrap{overflow-x:auto;overflow-y:hidden;padding:2px 1px 4px}
+.season{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(30px,1fr);gap:4px;min-width:640px}
+.wk{border:1px solid var(--line);background:var(--surface);border-radius:9px;padding:3px 3px 6px;display:flex;flex-direction:column;align-items:center;gap:2px;min-height:56px;color:var(--ink)}
+.wk:hover{background:var(--surface-2)}
+.wk .m{font:600 10.5px/12px var(--f-display);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);height:12px}
+.wk .n{font:700 16px/1.1 var(--f-display)}
+.wk .st{display:flex;gap:1.5px;height:6px;width:86%}
+.wk .st i{flex:1;border-radius:1.5px;background:var(--line)}
+.wk .st i.o{background:transparent}
+.wk .st i.ks{background:var(--sub)} .wk .st i.ka{background:var(--auto)} .wk .st i.kb{background:var(--bad-solid)}
+.wk[aria-current="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
+.wk.now .n{color:var(--signal)}
+
+/* ---- alertes ---- */
+.alerts{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:10px}
+.alert{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 13px;display:flex;flex-direction:column;gap:7px;min-width:0}
+.alert-h{display:flex;gap:9px;align-items:center;min-width:0}
+.alert-h strong{font-size:15px}
+.av{width:32px;height:32px;border-radius:50%;flex:none;display:grid;place-items:center;background:var(--pin-bg);color:var(--pin);font:700 14px var(--f-display);letter-spacing:.04em}
+.pills{display:flex;flex-wrap:wrap;gap:5px}
+.chip{display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:8px;font-weight:600;font-size:13px;line-height:1.3;max-width:100%}
+.chip.sub{background:var(--sub-bg);color:var(--sub)}
+.chip.auto{background:var(--auto-bg);color:var(--auto);box-shadow:inset 0 0 0 1.5px var(--auto-bg),inset 0 0 0 0 transparent;outline:1.5px dashed var(--auto);outline-offset:-1.5px}
+.chip.man{background:var(--pin-bg);color:var(--pin)}
+.chip.vide{background:var(--bad-solid);color:var(--on-solid)}
+.chip.okc{background:var(--ok-bg);color:var(--ok)}
+.chip.neu{background:var(--surface-2);color:var(--muted);border:1px solid var(--line-2)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;font-size:12.5px;color:var(--muted)}
+.legend span.it{display:inline-flex;gap:6px;align-items:center}
+
+/* ---- grille semaine ---- */
+.grid-wrap{overflow:auto;max-height:82vh;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table.grid{border-collapse:separate;border-spacing:0;width:100%;min-width:900px}
+.grid th,.grid td{border-bottom:1px solid var(--line-2);border-right:1px solid var(--line-2);padding:0;font-weight:400;text-align:left}
+.grid thead th{position:sticky;top:0;z-index:3;background:var(--surface-2);vertical-align:top;border-bottom:1px solid var(--line)}
+.grid .c-site{position:sticky;left:0;z-index:2;background:var(--surface);width:236px;min-width:176px;max-width:236px;padding:6px 10px;border-right:1px solid var(--line)}
+.grid thead .c-site{z-index:4;background:var(--surface-2);vertical-align:bottom;font:600 12px var(--f-display);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.c-day{min-width:104px}
+.c-day .dbtn{display:flex;align-items:baseline;gap:6px;width:100%;border:0;background:transparent;padding:7px 9px 2px;text-align:left}
+.c-day .dn{font:700 13px var(--f-display);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.c-day .dd{font:700 20px/1 var(--f-display)}
+.c-day .dm{font-size:12px;color:var(--muted)}
+.c-day .dsum{display:flex;flex-wrap:wrap;gap:4px;padding:2px 9px 7px;min-height:26px;font-size:12px;color:var(--muted)}
+.c-day .dsum .chip{font-size:11.5px;padding:1px 6px}
+.c-day.today{box-shadow:inset 0 3px 0 var(--signal)}
+.c-day.today .dd{color:var(--signal)}
+.c-day.out{opacity:.45}
+.grp th{background:var(--surface-2);padding:0}
+.grp-in{position:sticky;left:0;display:inline-flex;align-items:center;gap:10px;padding:6px 10px}
+.grp-in::before{content:"";width:10px;height:10px;border-radius:3px;background:currentColor}
+.grp-t{font:700 15px var(--f-display);letter-spacing:.08em;text-transform:uppercase}
+.grp-n{font-size:12px;color:var(--muted)}
+.grp.p1 .grp-in{color:var(--p1)} .grp.p2 .grp-in{color:var(--p2)} .grp.p3 .grp-in{color:var(--p3)}
+.grp.p1 th{background:var(--p1-bg)} .grp.p2 th{background:var(--p2-bg)} .grp.p3 th{background:var(--p3-bg)}
+.s-nm{font-weight:600;line-height:1.25;border:0;background:transparent;padding:0;text-align:left;color:var(--ink)}
+.s-nm:hover{text-decoration:underline}
+.s-meta{display:flex;flex-wrap:wrap;gap:3px 8px;align-items:center;font-size:12px;color:var(--muted);margin-top:2px}
+.veh{font:600 11px var(--f-mono);border:1px solid var(--line);border-radius:5px;padding:0 5px;color:var(--ink);background:var(--surface-2)}
+.s-meta .bad{color:var(--bad);font-weight:600}
+.cell.we{background:var(--surface-2)}
+.cell.out{background:repeating-linear-gradient(135deg,var(--surface-2) 0 6px,var(--surface) 6px 12px)}
+.a{display:flex;flex-wrap:wrap;align-items:center;gap:3px 6px;width:100%;min-height:40px;border:0;background:transparent;padding:5px 8px;text-align:left}
+.a:hover{background:var(--line-2)}
+.a .nm{color:var(--muted)}
+.a .dim{color:var(--muted);font-size:12px;font-style:italic;opacity:.8}
+.fait{display:inline-flex;align-items:center;gap:2px;color:var(--ok);font:600 11px var(--f-mono)}
+.cfl{color:var(--bad);display:inline-flex}
+
+/* ---- jour ---- */
+.meters{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+.meter{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:10px 13px;display:flex;flex-direction:column;gap:7px}
+.meter-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.meter-h b{font:700 15px var(--f-display);letter-spacing:.08em;text-transform:uppercase}
+.meter-h span{font:600 15px var(--f-mono)}
+.meter .tr{height:7px;border-radius:4px;background:var(--line-2);overflow:hidden}
+.meter .tr i{display:block;height:100%;border-radius:4px;background:currentColor}
+.meter.p1{color:var(--p1)} .meter.p2{color:var(--p2)} .meter.p3{color:var(--p3)}
+.meter .meter-h span{color:var(--ink)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;background:var(--surface);flex-wrap:wrap}
+.seg button{border:0;background:transparent;padding:6px 11px;min-height:34px;font-weight:600;border-right:1px solid var(--line-2)}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--pri);color:var(--pri-ink)}
+.tours{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(340px,100%),1fr));gap:14px;align-items:start}
+.tour{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;min-width:0}
+.tour.alerte{border-color:var(--bad)}
+.tour-h{display:flex;align-items:center;gap:10px;padding:11px 12px;background:var(--surface-2);border-bottom:1px solid var(--line)}
+.tour-h h3{font:700 19px/1.1 var(--f-display);letter-spacing:.03em;text-transform:uppercase}
+.tour-h p{font-size:12.5px;color:var(--muted)}
+.tour-h .gr{flex:1;min-width:0}
+.stops{list-style:none;margin:0;padding:0}
+.stop{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;padding:10px 12px;border-top:1px solid var(--line-2);align-items:start}
+.stop:first-child{border-top:0}
+.stop.done .stop-b{opacity:.55}
+.chk{width:30px;height:30px;border-radius:8px;border:2px solid var(--line);background:var(--surface);display:grid;place-items:center;color:transparent;padding:0}
+.chk[aria-checked="true"]{background:var(--ok);border-color:var(--ok);color:var(--surface)}
+.stop-t{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center}
+.stop-t strong{font-size:15px}
+.pt{font:700 11.5px var(--f-mono);padding:1px 6px;border-radius:5px}
+.pt.p1{background:var(--p1-bg);color:var(--p1)} .pt.p2{background:var(--p2-bg);color:var(--p2)} .pt.p3{background:var(--p3-bg);color:var(--p3)}
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
+.tag{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:6px;padding:1px 7px;font-size:12.5px;background:var(--surface-2)}
+.tag b{font:600 12.5px var(--f-mono)}
+.cons{margin-top:5px;font-size:13.5px;color:var(--muted);max-width:68ch}
+.cons.warn{color:var(--ink);background:var(--p2-bg);border-left:3px solid var(--p2);padding:5px 8px;border-radius:0 6px 6px 0}
+
+/* ---- équipe : frise ---- */
+.tl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.tl{min-width:980px;display:grid;grid-template-columns:168px minmax(0,1fr)}
+.tl-name{position:sticky;left:0;z-index:2;background:var(--surface);border-right:1px solid var(--line);border-bottom:1px solid var(--line-2);padding:4px 10px;display:flex;flex-direction:column;justify-content:center;min-height:34px;min-width:0}
+.tl-name b{font-weight:600;line-height:1.2}
+.tl-name span{font-size:11.5px;color:var(--muted)}
+.tl-name.hd{background:var(--surface-2);font:600 12px var(--f-display);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);min-height:30px}
+.tl-months{display:flex;background:var(--surface-2);border-bottom:1px solid var(--line-2)}
+.tl-months div{font:700 13px var(--f-display);letter-spacing:.1em;text-transform:uppercase;padding:6px 8px;border-left:1px solid var(--line);white-space:nowrap;overflow:hidden}
+.tl-months div:first-child{border-left:0}
+.tl-grp{grid-column:1/-1;background:var(--surface-2);border-bottom:1px solid var(--line-2);font:700 12.5px var(--f-display);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.tl-grp span{position:sticky;left:0;display:inline-block;padding:4px 10px}
+.tl-track{position:relative;border-bottom:1px solid var(--line-2);min-height:34px;cursor:crosshair;touch-action:pan-x pan-y}
+.tl-track .mline{position:absolute;top:0;bottom:0;width:1px;background:var(--line)}
+.tl-track .tline{position:absolute;top:0;bottom:0;width:2px;background:var(--signal);z-index:1}
+.ab{position:absolute;top:5px;bottom:5px;border:0;border-radius:5px;padding:0 4px;font:700 12px/1 var(--f-display);letter-spacing:.04em;color:var(--surface);overflow:hidden;white-space:nowrap;text-align:left;min-width:5px;z-index:1}
+.ab.ex{background-image:repeating-linear-gradient(135deg,transparent 0 5px,var(--scrim) 5px 6px)}
+.t-piquet{background-color:var(--ok)} .t-vacances{background-color:var(--p3)} .t-maladie{background-color:var(--bad-solid);color:var(--on-solid)}
+.t-conge{background-color:var(--muted)} .t-formation{background-color:var(--auto)} .t-autre{background-color:var(--p2)}
+.ghost{position:absolute;top:3px;bottom:3px;border:1.5px dashed var(--ink);border-radius:5px;background:var(--pin-bg);opacity:.7;pointer-events:none}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px}
+
+/* ---- listes ---- */
+.list{border:1px solid var(--line);border-radius:12px;background:var(--surface);overflow:hidden}
+.lrow{display:grid;gap:4px 14px;padding:9px 12px;border-top:1px solid var(--line-2);align-items:center}
+.lrow:first-child{border-top:0}
+.lrow.hd{background:var(--surface-2);font:600 12px var(--f-display);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.lrow.g{background:var(--surface-2);font:700 14px var(--f-display);letter-spacing:.08em;text-transform:uppercase}
+.lrow.g.p1{color:var(--p1);background:var(--p1-bg)} .lrow.g.p2{color:var(--p2);background:var(--p2-bg)} .lrow.g.p3{color:var(--p3);background:var(--p3-bg)}
+.lrow>*{min-width:0}
+.erow{grid-template-columns:minmax(130px,1.3fr) minmax(90px,.8fr) minmax(80px,.6fr) minmax(130px,1fr) minmax(110px,.9fr) minmax(120px,.9fr) auto}
+.srow{grid-template-columns:minmax(170px,1.3fr) minmax(70px,.5fr) minmax(100px,.7fr) minmax(110px,.8fr) minmax(0,2.4fr) auto}
+.lrow .k{display:none;font:600 11px var(--f-display);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-right:6px}
+.off{opacity:.5}
+@media (max-width:860px){
+  .lrow.hd{display:none}
+  .erow,.srow{grid-template-columns:minmax(0,1fr) auto}
+  .lrow>*{grid-column:1}
+  .lrow>.act{grid-column:2;grid-row:1}
+  .lrow .k{display:inline}
+  .grid .c-site{width:156px;min-width:156px;max-width:156px}
+  .h1{font-size:25px}
+}
+
+/* ---- dialogues ---- */
+dialog{border:0;padding:0;background:var(--surface);color:var(--ink);border-radius:14px;box-shadow:var(--shadow);width:min(580px,calc(100vw - 24px));max-height:min(88vh,780px);overflow:hidden}
+dialog[open]{display:flex;flex-direction:column}
+dialog::backdrop{background:var(--scrim)}
+.dlg-h{padding:14px 16px;border-bottom:1px solid var(--line-2);display:flex;gap:10px;align-items:flex-start}
+.dlg-h .gr{flex:1;min-width:0}
+.dlg-h h2{font:700 22px/1.1 var(--f-display);letter-spacing:.02em;text-transform:uppercase;text-wrap:balance}
+.dlg-h p{color:var(--muted);font-size:13px;margin-top:2px}
+.dlg-b{padding:14px 16px;overflow:auto;display:flex;flex-direction:column;gap:14px;min-height:0}
+.dlg-f{padding:12px 16px;border-top:1px solid var(--line-2);display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+.dlg-f .sp{flex:1}
+form.dlg-form{display:flex;flex-direction:column;min-height:0;flex:1}
+.fld{display:flex;flex-direction:column;gap:4px;min-width:0}
+.fld>span{font:600 12px var(--f-display);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.fld .in{width:100%}
+.row2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (max-width:480px){.row2{grid-template-columns:minmax(0,1fr)}}
+.ck{display:flex;gap:8px;align-items:center}
+.ck input{width:18px;height:18px}
+.box{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--surface-2);display:flex;flex-direction:column;gap:6px}
+.box.absent{border-color:var(--bad);background:var(--bad-bg)}
+.box.auto{border:1.5px dashed var(--auto);background:var(--auto-bg)}
+.cands{display:flex;flex-direction:column;gap:6px}
+.cand{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:1px 10px;align-items:center;width:100%;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:7px 10px}
+.cand:hover:not([disabled]){background:var(--surface-2)}
+.cand[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.cand[disabled]{opacity:.5;cursor:not-allowed}
+.cand b{font-weight:600}
+.cand .r{font-size:12.5px;color:var(--muted);text-align:right}
+.cand .t{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:4px}
+.cand .t .chip{font-size:11.5px;padding:0 6px}
+.impact{border-radius:10px;padding:10px 12px;background:var(--surface-2);border:1px solid var(--line);font-size:13.5px}
+.err{color:var(--bad);font-weight:600}
+.contact{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--line-2)}
+.contact:first-child{border-top:0}
+.contact .gr{flex:1;min-width:0}
+.contact .mono{font-size:15px;user-select:all}
+pre.copy{white-space:pre-wrap;font:500 12.5px/1.5 var(--f-mono);background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:10px;margin:0;user-select:all}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:60;background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:10px;font-weight:600;box-shadow:var(--shadow);max-width:calc(100vw - 32px)}
+@media (prefers-reduced-motion:no-preference){ .btn,.a,.wk,.cand,.chk{transition:background-color .12s,border-color .12s} }
+</style>
+
+<header class="bar">
+  <div class="bar-in">
+    <div class="brand">
+      <div class="brand-m" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v18M4.2 7.5l15.6 9M19.8 7.5l-15.6 9"/></svg></div>
+      <div><div class="brand-t">Planning neige</div><div class="brand-s">Service hivernal 2026–2027 · cbc</div></div>
+    </div>
+    <nav class="tabs" aria-label="Vues">
+      <a class="tab" href="#semaine" data-view="semaine">Semaine</a>
+      <a class="tab" href="#jour" data-view="jour">Jour</a>
+      <a class="tab" href="#equipe" data-view="equipe">Équipe</a>
+      <a class="tab" href="#sites" data-view="sites">Sites</a>
+    </nav>
+    <div class="bar-r">
+      <span class="sync" id="sync"><i></i><span>Chargement…</span></span>
+      <button type="button" class="btn sm" data-act="contacts" id="btn-contacts">Contacts</button>
+    </div>
+  </div>
+</header>
+<main class="wrap" id="view">
+  <div class="empty"><h2 class="h2">Chargement du planning</h2><p>Les sites, l'équipe et les absences de la saison s'affichent ici dans un instant.</p></div>
+</main>
+<dialog id="dlg" aria-label="Détail"></dialog>
+<div id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+(()=>{'use strict';
+/* ================= constantes ================= */
+const SAISON={du:'2026-11-15',au:'2027-03-15'};
+const JOURS=['lundi','mardi','mercredi','jeudi','vendredi','samedi','dimanche'];
+const JC=['lun','mar','mer','jeu','ven','sam','dim'];
+const MOIS=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+const MC=['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+const PRIOS={1:{l:'Avant 05h00',c:'05h'},2:{l:'Avant 08h00',c:'08h'},3:{l:'Après 08h00',c:'+08h'}};
+const ROLES=['Chauffeur','Remplaçant','À pied','Responsable'];
+const TYPES={piquet:{l:'Piquet',c:'P',abs:false},vacances:{l:'Vacances',c:'V',abs:true},maladie:{l:'Maladie / accident',c:'M',abs:true},conge:{l:'Congé / repos',c:'C',abs:true},formation:{l:'Formation',c:'F',abs:true},autre:{l:'Absent (autre)',c:'A',abs:true}};
+const INTERV={'':'Aucune',salage:'Salage',deneigement:'Déneigement',mixte:'Salage + déneigement'};
+const VUES=['semaine','jour','equipe','sites'];
+
+/* ================= utilitaires ================= */
+const $=(s,r=document)=>r.querySelector(s);
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pad=n=>String(n).padStart(2,'0');
+const dp=s=>{const a=String(s).split('-');return Date.UTC(+a[0],+a[1]-1,+a[2]);};
+const di=t=>new Date(t).toISOString().slice(0,10);
+const add=(s,n)=>di(dp(s)+n*864e5);
+const dow=s=>(new Date(dp(s)).getUTCDay()+6)%7;
+const monday=s=>add(s,-dow(s));
+const diff=(a,b)=>Math.round((dp(b)-dp(a))/864e5);
+const todayISO=()=>{const n=new Date();return n.getFullYear()+'-'+pad(n.getMonth()+1)+'-'+pad(n.getDate());};
+const heure=()=>{const n=new Date();return pad(n.getHours())+':'+pad(n.getMinutes());};
+const isDate=s=>/^\d{4}-\d{2}-\d{2}$/.test(s||'');
+const inS=d=>d>=SAISON.du&&d<=SAISON.au;
+const parts=s=>{const a=s.split('-');return{y:+a[0],m:+a[1]-1,d:+a[2]};};
+const fLong=s=>{const p=parts(s);return JOURS[dow(s)]+' '+p.d+(p.d===1?'er':'')+' '+MOIS[p.m]+' '+p.y;};
+const fDM=s=>{const p=parts(s);return pad(p.d)+'.'+pad(p.m+1);};
+const fNum=s=>fDM(s)+'.'+parts(s).y;
+const fCourt=s=>JC[dow(s)]+'. '+fDM(s);
+const fPlage=(a,b)=>(!b||a===b)?fNum(a):fDM(a)+' → '+fNum(b);
+function fSemaine(l){const a=parts(l),b=parts(add(l,6));if(a.m===b.m)return a.d+' – '+b.d+' '+MOIS[b.m]+' '+b.y;if(a.y===b.y)return a.d+' '+MC[a.m]+' – '+b.d+' '+MC[b.m]+' '+b.y;return a.d+' '+MC[a.m]+' '+a.y+' – '+b.d+' '+MC[b.m]+' '+b.y;}
+function isoWeek(s){const thu=dp(s)+(3-dow(s))*864e5;const y=new Date(thu).getUTCFullYear();return 1+Math.floor((thu-Date.UTC(y,0,1))/864e5/7);}
+const plur=(n,s,p)=>n+' '+(n>1?(p||s+'s'):s);
+const de=n=>(/^[aeiouyhàâéèêëîïôöùûü]/i.test(n)?"d'":'de ')+n;
+const initiales=n=>String(n||'?').trim().split(/[\s-]+/).slice(0,2).map(w=>w[0]||'').join('').toUpperCase();
+const P={
+  chevL:'<path d="M15 6l-6 6 6 6"/>',chevR:'<path d="M9 6l6 6-6 6"/>',check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+  pin:'<path d="M9 4h6l-1 6 3 3H7l3-3z"/><path d="M12 13v7"/>',swap:'<path d="M4 9h13l-3-3M20 15H7l3 3"/>',
+  spark:'<path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/>',alert:'<path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17.4v.2"/>',
+  key:'<circle cx="8" cy="15" r="3.5"/><path d="M10.5 12.5L19 4M15 8l3 3"/>',badge:'<rect x="5" y="7" width="14" height="12" rx="2"/><path d="M12 3v4M9 12h6M9 15.5h4"/>',
+  code:'<rect x="4" y="5" width="16" height="14" rx="2"/><path d="M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01"/>',
+  copy:'<rect x="8" y="8" width="11" height="11" rx="2"/><path d="M5 15V6a1 1 0 011-1h9"/>',plus:'<path d="M12 5v14M5 12h14"/>',x:'<path d="M6 6l12 12M18 6L6 18"/>',
+  edit:'<path d="M4 20h4l10-10-4-4L4 16zM13 7l4 4"/>',dots:'<path d="M5 12h.01M12 12h.01M19 12h.01"/>'};
+const ic=(n,z=16)=>`<svg class="ic" viewBox="0 0 24 24" width="${z}" height="${z}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[n]||''}</svg>`;
+let toastT=0;
+function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>{t.hidden=true;},3200);}
+const ls={get(k){try{return localStorage.getItem('pn:'+k);}catch(e){return null;}},set(k,v){try{localStorage.setItem('pn:'+k,v);}catch(e){}}};
+
+/* ================= état ================= */
+const S={emp:new Map(),sites:new Map(),abs:new Map(),jours:new Map(),reg:new Map(),
+  loaded:{},mode:'loading',canWrite:true,writeUnknown:false,slow:false,
+  view:'semaine',week:'',day:'',moi:ls.get('moi')||'',q:'',fp:0,dlg:null};
+let store=null,version=0;
+const planCache=new Map();
+function bump(){version++;planCache.clear();}
+function memo(fn){let v=-1,val;return()=>{if(v!==version){val=fn();v=version;}return val;};}
+const empTries=memo(()=>[...S.emp.values()].sort((a,b)=>(a.ordre??999)-(b.ordre??999)||String(a.nom).localeCompare(String(b.nom),'fr')));
+const sitesTries=memo(()=>[...S.sites.values()].sort((a,b)=>(+a.priorite||3)-(+b.priorite||3)||(a.ordre??999)-(b.ordre??999)||String(a.nom).localeCompare(String(b.nom),'fr')));
+const absIdx=memo(()=>{const m=new Map();for(const a of S.abs.values()){if(!isDate(a.du))continue;if(!m.has(a.emp))m.set(a.emp,[]);m.get(a.emp).push(a);}return m;});
+const nom=id=>(S.emp.get(id)||{}).nom||'—';
+const ord=e=>e.ordre??999;
+
+/* ================= stockage ================= */
+function cloudStore(db){return{
+  watch:(c,cb,err)=>db.collection(c).limit(1000).onSnapshot(s=>cb(s.docs.map(d=>Object.assign({id:d.id},d.data()))),err),
+  set:(c,id,d)=>db.collection(c).doc(id).set(d),
+  update:(c,id,d)=>db.collection(c).doc(id).update(d),
+  del:(c,id)=>db.collection(c).doc(id).delete(),
+  newId:c=>db.collection(c).doc().id};}
+function localStore(){
+  const mem={},subs={},K=c=>'planning-neige:'+c;
+  const load=c=>{if(!mem[c]){try{mem[c]=JSON.parse(localStorage.getItem(K(c))||'{}');}catch(e){mem[c]={};}}return mem[c];};
+  const rows=c=>Object.entries(load(c)).map(([id,d])=>Object.assign({id},d));
+  const save=c=>{try{localStorage.setItem(K(c),JSON.stringify(mem[c]));}catch(e){}(subs[c]||[]).forEach(f=>f(rows(c)));};
+  const merge=(a,b)=>{const o=Object.assign({},a);for(const k in b){const x=b[k],y=o[k];o[k]=(x&&typeof x==='object'&&!Array.isArray(x)&&y&&typeof y==='object'&&!Array.isArray(y))?merge(y,x):x;}return o;};
+  return{
+    watch(c,cb){(subs[c]=subs[c]||[]).push(cb);setTimeout(()=>cb(rows(c)),0);return()=>{};},
+    async set(c,id,d){load(c)[id]=JSON.parse(JSON.stringify(d));save(c);},
+    async update(c,id,d){const m=load(c);if(!m[id])throw{code:'invalid_argument'};m[id]=merge(m[id],d);save(c);},
+    async del(c,id){delete load(c)[id];save(c);},
+    newId:()=>'n'+Date.now().toString(36)+Math.random().toString(36).slice(2,7)};}
+async function w(p){
+  try{await p;return true;}
+  catch(e){const c=e&&e.code;
+    if(c==='invalid_argument'&&S.mode==='cloud'&&S.writeUnknown){S.canWrite=false;toast('Modification refusée : vous consultez ce planning en lecture seule.');sched();}
+    else if(c==='quota_exceeded')toast('Espace de stockage plein : supprimez d\'anciennes entrées.');
+    else toast('Enregistrement impossible pour le moment. Réessayez.');
+    return false;}}
+const queues=new Map(),made=new Set();
+function enqueue(k,fn){const p=(queues.get(k)||Promise.resolve()).then(fn,fn);queues.set(k,p.catch(()=>{}));return p;}
+function patchJour(date,patch){return enqueue('jours/'+date,async()=>{
+  const init=()=>store.set('jours',date,Object.assign({choix:{},fait:{}},patch));
+  if(S.jours.has(date)||made.has(date)){try{await store.update('jours',date,patch);}catch(e){if(e&&e.code==='invalid_argument'&&!S.jours.has(date))await init();else throw e;}}
+  else await init();
+  made.add(date);});}
+
+/* ================= moteur d'attribution ================= */
+function etat(id,date){let absent=null,piquet=false;
+  for(const a of(absIdx().get(id)||[])){if(a.du<=date&&(a.au||a.du)>=date){if((TYPES[a.type]||TYPES.autre).abs){if(!absent)absent=a;}else piquet=true;}}
+  return{absent,piquet};}
+const dispo=(id,date)=>{const e=S.emp.get(id);return !!e&&e.actif!==false&&!etat(id,date).absent;};
+function candidats(s,date,load,cover){
+  const aPied=/pied/i.test(s.vehicule||''),out=[];
+  for(const e of empTries()){
+    if(e.actif===false||e.role==='Responsable'||e.id===s.resp)continue;
+    if(e.role==='À pied'&&!aPied)continue;
+    const et=etat(e.id,date);if(et.absent)continue;
+    const l=load.get(e.id)||0,c=s.resp?((cover.get(s.resp)||new Map()).get(e.id)||0):0;
+    const why=[e.role==='Remplaçant'?'remplaçant sans tournée fixe':'disponible ce jour'];
+    if(et.piquet)why.push('de piquet');
+    if(c)why.push('couvre déjà '+plur(c,'site')+' '+de(nom(s.resp)));
+    why.push(l?plur(l,'site')+' ce jour':'aucun site ce jour');
+    out.push({id:e.id,score:(e.role==='Remplaçant'?0:20)-(et.piquet?10:0)+l-(c?5:0),why,o:ord(e)});}
+  return out.sort((x,y)=>x.score-y.score||x.o-y.o);}
+function planDay(date){
+  let p=planCache.get(date);if(p)return p;
+  p=new Map();const choix=(S.jours.get(date)||{}).choix||{};
+  const load=new Map(),cover=new Map(),pending=[];
+  const inc=(m,k)=>m.set(k,(m.get(k)||0)+1);
+  const cov=(r,e)=>{if(!r||r===e)return;if(!cover.has(r))cover.set(r,new Map());inc(cover.get(r),e);};
+  for(const s of sitesTries()){
+    const a={site:s.id,emp:null,kind:'vide',absent:null,why:[],sansResp:false,conflit:false};p.set(s.id,a);
+    const resp=s.resp&&S.emp.has(s.resp)?s.resp:'';
+    const er=resp?etat(resp,date):null;if(er&&er.absent)a.absent=er.absent;
+    a.sansResp=!resp;
+    const man=choix[s.id];
+    if(man&&S.emp.has(man)){a.emp=man;a.kind='manuel';a.conflit=!dispo(man,date);inc(load,man);cov(resp,man);continue;}
+    if((isDate(s.du)&&date<s.du)||(isDate(s.au)&&date>s.au)){a.kind='hors';continue;}
+    if(s.surDemande){a.kind='demande';continue;}
+    if(!resp){a.kind='libre';continue;}
+    if(dispo(resp,date)){a.emp=resp;a.kind='resp';inc(load,resp);continue;}
+    const sub=(s.remplacants||[]).find(id=>dispo(id,date));
+    if(sub){a.emp=sub;a.kind='sub';inc(load,sub);cov(resp,sub);continue;}
+    pending.push(s);}
+  for(const s of pending){const a=p.get(s.id),best=candidats(s,date,load,cover)[0];
+    if(best){a.emp=best.id;a.kind='auto';a.why=best.why;inc(load,best.id);cov(s.resp,best.id);}}
+  p.load=load;planCache.set(date,p);return p;}
+function statsJour(date){const c={resp:0,sub:0,auto:0,manuel:0,vide:0,libre:0,demande:0,hors:0,total:0,fait:0};
+  if(!inS(date))return c;const f=(S.jours.get(date)||{}).fait||{};
+  for(const a of planDay(date).values()){c[a.kind]++;if(a.kind!=='hors'&&a.kind!=='demande'){c.total++;if(f[a.site])c.fait++;}}return c;}
+const pire=c=>c.vide?'kb':c.auto?'ka':(c.sub||c.manuel)?'ks':'';
+
+/* ================= rendu ================= */
+let raf=0;
+function sched(){if(raf)return;const run=()=>{if(!raf)return;raf=0;render();};raf=1;requestAnimationFrame(run);setTimeout(run,150);}
+function keyOf(el){if(!el||el===document.body)return null;if(el.id)return'#'+CSS.escape(el.id);const d=el.dataset||{};if(d.act){let s='[data-act="'+d.act+'"]';for(const k of['site','date','emp','id','w','v'])if(d[k])s+='[data-'+k+'="'+CSS.escape(d[k])+'"]';return s;}return null;}
+function render(){
+  document.querySelectorAll('.tab').forEach(t=>{if(t.dataset.view===S.view)t.setAttribute('aria-current','page');else t.removeAttribute('aria-current');});
+  const sy=$('#sync');const M={loading:['','Chargement…'],cloud:[S.canWrite?'ok':'','Enregistré en ligne'+(S.canWrite?'':' · lecture seule')],local:['','Mode local · cet appareil'],off:['bad','Planning non disponible']}[S.mode];
+  sy.className='sync '+M[0];sy.lastElementChild.textContent=M[1];
+  const v=$('#view'),dlgOpen=$('#dlg').open;
+  const fk=dlgOpen?null:keyOf(document.activeElement),sel=document.activeElement&&document.activeElement.selectionStart;
+  const sc={};v.querySelectorAll('[data-keep]').forEach(e=>{sc[e.dataset.keep]=[e.scrollLeft,e.scrollTop];});
+  v.innerHTML=body();
+  v.querySelectorAll('[data-keep]').forEach(e=>{const s=sc[e.dataset.keep];if(s){e.scrollLeft=s[0];e.scrollTop=s[1];}});
+  if(fk){const el=v.querySelector(fk);if(el){el.focus({preventScroll:true});if(typeof sel==='number'&&el.setSelectionRange){try{el.setSelectionRange(sel,sel);}catch(e){}}}}
+  if(S.dlg&&S.dlg.kind==='cell'&&dlgOpen)drawDlg();
+}
+function body(){
+  if(S.mode==='off')return`<div class="empty"><h2 class="h2">Planning non disponible ici</h2><p>Ouvrez cette page en étant connecté à claude.ai pour charger les sites, l'équipe et les absences.</p></div>`;
+  const need=['employes','sites','absences','jours','reglages'];
+  if(S.mode==='loading'||need.some(c=>!S.loaded[c]))return`<div class="empty"><h2 class="h2">Chargement du planning</h2><p>${S.slow?'Les données ne répondent pas encore. La page se remplira dès que la connexion revient.':'Les sites, l\'équipe et les absences de la saison s\'affichent ici dans un instant.'}</p></div>`;
+  if(!S.sites.size&&!S.emp.size&&(S.view==='semaine'||S.view==='jour'))return`<div class="empty"><h2 class="h2">Le planning est vide</h2><p>Commencez par ajouter les employés, puis les sites avec leur responsable. La grille de la semaine se construit toute seule.</p><div class="tools"><a class="btn pri" href="#equipe">Ajouter l'équipe</a><a class="btn" href="#sites">Ajouter les sites</a></div></div>`;
+  return{semaine:vSemaine,jour:vJour,equipe:vEquipe,sites:vSites}[S.view]();
+}
+function exemples(){const n=[...S.abs.values()].filter(a=>a.exemple).length;if(!n)return'';
+  return`<div class="note ex"><p><strong>${plur(n,'absence')} d'exemple</strong> ${n>1?'sont chargées':'est chargée'} pour montrer les remplacements automatiques. Elles ne correspondent à aucune absence réelle.</p>${S.canWrite?`<button type="button" class="btn sm" data-act="suppr-ex">Supprimer les exemples</button>`:''}</div>`;}
+
+/* ---------- vue semaine ---------- */
+const WK0=monday(SAISON.du),WKN=monday(SAISON.au);
+function chipKind(a,short){
+  const n=esc(nom(a.emp));
+  switch(a.kind){
+    case'resp':return`<span class="nm">${n}</span>`;
+    case'sub':return`<span class="chip sub">${ic('swap',13)}<span>${n}</span></span>`;
+    case'auto':return`<span class="chip auto">${ic('spark',13)}<span>${n}</span></span>`;
+    case'manuel':return`<span class="chip man">${ic('pin',13)}<span>${n}</span></span>`+(a.conflit?`<span class="cfl" title="Cette personne est absente ce jour">${ic('alert',14)}</span>`:'');
+    case'vide':return`<span class="chip vide">${ic('alert',13)}<span>À remplacer</span></span>`;
+    case'demande':return`<span class="dim">sur demande</span>`;
+    default:return`<span class="dim">hors période</span>`;}}
+const KLABEL={resp:'responsable prévu',sub:'remplaçant désigné',auto:'proposition automatique',manuel:'choix manuel',vide:'personne de disponible',libre:'sans responsable',demande:'sur demande',hors:'hors période'};
+function accIcons(s){const t=(s.acces||'').toLowerCase();let o='';if(/cl[ée]/.test(t))o+=ic('key',13);if(/badge|carte/.test(t))o+=ic('badge',13);if(/code/.test(t))o+=ic('code',13);return o?`<span title="${esc(s.acces)}">${o}</span>`:'';}
+function vSemaine(){
+  const today=todayISO(),days=[0,1,2,3,4,5,6].map(i=>add(S.week,i));
+  const st=days.map(statsJour);const tot=st.reduce((t,c)=>{for(const k in c)t[k]=(t[k]||0)+c[k];return t;},{});
+  /* frise saison */
+  let frise='',pm=-1;
+  for(let l=WK0;l<=WKN;l=add(l,7)){
+    const ticks=[0,1,2,3,4,5,6].map(i=>{const d=add(l,i);return inS(d)?`<i class="${pire(statsJour(d))}"></i>`:'<i class="o"></i>';}).join('');
+    const ref=l<SAISON.du?SAISON.du:l,m=parts(add(ref,l<SAISON.du?0:3)).m;const lab=m!==pm?MC[m].replace('.',''):'';pm=m;
+    frise+=`<button type="button" class="wk${monday(today)===l?' now':''}" data-act="week" data-w="${l}" aria-current="${l===S.week}" title="Semaine ${isoWeek(l)} · ${fSemaine(l)}"><span class="m">${lab}</span><span class="n">${isoWeek(l)}</span><span class="st">${ticks}</span></button>`;}
+  /* alertes */
+  const g=new Map(),sans=new Map();
+  days.forEach(d=>{if(!inS(d))return;for(const a of planDay(d).values()){
+    if(a.kind==='libre')sans.set(a.site,1);
+    if(a.absent&&['sub','auto','manuel','vide'].includes(a.kind)){const k=a.absent.id;if(!g.has(k))g.set(k,{abs:a.absent,sites:new Set(),jours:new Set(),sub:0,auto:0,manuel:0,vide:0});const x=g.get(k);x.sites.add(a.site);x.jours.add(d);x[a.kind]++;}}});
+  let alerts='';
+  for(const x of g.values()){const e=x.abs.emp,t=TYPES[x.abs.type]||TYPES.autre;
+    alerts+=`<div class="alert"><div class="alert-h"><span class="av">${esc(initiales(nom(e)))}</span><div><strong>${esc(nom(e))}</strong> · ${esc(t.l)}<div class="muted">${fPlage(x.abs.du,x.abs.au)} · ${plur(x.sites.size,'site')} sur ${plur(x.jours.size,'jour')} cette semaine</div></div></div><div class="pills">${x.sub?`<span class="chip sub">${ic('swap',13)}${plur(x.sub,'passage')} par un remplaçant désigné</span>`:''}${x.manuel?`<span class="chip man">${ic('pin',13)}${x.manuel} choisis à la main</span>`:''}${x.auto?`<span class="chip auto">${ic('spark',13)}${plur(x.auto,'proposition')} à confirmer</span>`:''}${x.vide?`<span class="chip vide">${ic('alert',13)}${x.vide} sans personne</span>`:''}</div></div>`;}
+  if(sans.size)alerts+=`<div class="alert"><div class="alert-h"><span class="av">?</span><div><strong>${plur(sans.size,'site')} sans responsable</strong><div class="muted">${[...sans.keys()].map(id=>esc((S.sites.get(id)||{}).nom)).join(', ')}</div></div></div><div class="pills"><a class="btn sm" href="#sites">Attribuer un responsable</a></div></div>`;
+  if(!alerts)alerts=`<div class="alert"><div class="alert-h"><span class="av">${ic('check',16)}</span><div><strong>Semaine couverte</strong><div class="muted">Tous les sites sont assurés par leur responsable prévu.</div></div></div></div>`;
+  /* grille */
+  const head=days.map((d,i)=>{const c=st[i],p=parts(d),ok=inS(d);
+    const piq=ok?empTries().filter(e=>etat(e.id,d).piquet).map(e=>e.nom):[];
+    let sum='';if(ok){if(c.vide)sum+=`<span class="chip vide">${c.vide} sans personne</span>`;if(c.auto)sum+=`<span class="chip auto">${c.auto} proposés</span>`;if(c.sub+c.manuel)sum+=`<span class="chip sub">${c.sub+c.manuel} remplacés</span>`;if(!sum)sum='prévu';if(piq.length)sum+=`<span class="chip okc" title="De piquet">P · ${esc(piq.join(', '))}</span>`;}else sum='hors saison';
+    return`<th scope="col" class="c-day${d===today?' today':''}${ok?'':' out'}"><button type="button" class="dbtn" data-act="go-jour" data-date="${d}" title="Ouvrir la feuille du ${fLong(d)}"><span class="dn">${JC[i]}</span><span class="dd">${p.d}</span><span class="dm">${MC[p.m]}</span></button><div class="dsum">${sum}</div></th>`;}).join('');
+  let rows='';
+  for(const pr of[1,2,3]){const grp=sitesTries().filter(s=>(+s.priorite||3)===pr);if(!grp.length)continue;
+    rows+=`<tr class="grp p${pr}"><th colspan="8" scope="colgroup"><div class="grp-in"><span class="grp-t">${PRIOS[pr].l}</span><span class="grp-n">${plur(grp.length,'site')}</span></div></th></tr>`;
+    for(const s of grp){
+      const r=s.resp&&S.emp.has(s.resp);
+      rows+=`<tr><th scope="row" class="c-site"><button type="button" class="s-nm" data-act="site-edit" data-id="${esc(s.id)}">${esc(s.nom)}</button><div class="s-meta">${s.vehicule?`<span class="veh">${esc(s.vehicule)}</span>`:''}${r?`<span>${esc(nom(s.resp))}</span>`:(s.surDemande?'<span>sur demande</span>':'<span class="bad">sans responsable</span>')}${accIcons(s)}</div></th>`;
+      days.forEach(d=>{
+        if(!inS(d)){rows+='<td class="cell out"></td>';return;}
+        const a=planDay(d).get(s.id),f=((S.jours.get(d)||{}).fait||{})[s.id];
+        rows+=`<td class="cell${dow(d)>=5?' we':''}"><button type="button" class="a" data-act="cell" data-site="${esc(s.id)}" data-date="${d}" aria-label="${esc(s.nom)}, ${fCourt(d)} : ${esc(a.emp?nom(a.emp)+', ':'')}${KLABEL[a.kind]}">${chipKind(a)}${f?`<span class="fait">${ic('check',12)}${esc(f.h||'')}</span>`:''}</button></td>`;});
+      rows+='</tr>';}}
+  return`${exemples()}
+  <div class="tools">
+    <h1 class="h1"><small>Semaine ${isoWeek(S.week)}</small>${fSemaine(S.week)}</h1><span class="sp"></span>
+    <div class="navg"><button type="button" class="btn icon" data-act="week-nav" data-v="-1" aria-label="Semaine précédente"${S.week<=WK0?' disabled':''}>${ic('chevL')}</button><button type="button" class="btn" data-act="week-today">Cette semaine</button><button type="button" class="btn icon" data-act="week-nav" data-v="1" aria-label="Semaine suivante"${S.week>=WKN?' disabled':''}>${ic('chevR')}</button></div>
+    <label class="vh" for="go-date">Aller à une date</label><input class="in" type="date" id="go-date" data-chg="go-date" min="${SAISON.du}" max="${SAISON.au}" value="${S.week<SAISON.du?SAISON.du:S.week}">
+  </div>
+  <div class="season-wrap" data-keep="season"><div class="season" role="group" aria-label="Semaines de la saison, du 15 novembre au 15 mars">${frise}</div></div>
+  <div class="alerts">${alerts}</div>
+  <div class="tools">
+    <div class="legend"><span class="it"><span class="nm muted">Miguel</span> responsable prévu</span><span class="it"><span class="chip sub">${ic('swap',13)}Marco</span> remplaçant désigné du site</span><span class="it"><span class="chip auto">${ic('spark',13)}Ali</span> proposé automatiquement</span><span class="it"><span class="chip man">${ic('pin',13)}Yanis</span> choisi à la main</span><span class="it"><span class="chip vide">${ic('alert',13)}À remplacer</span> personne de disponible</span></div>
+    <span class="sp"></span>
+    ${S.canWrite&&tot.manuel?`<button type="button" class="btn sm" data-act="reset-sem">Revenir à l'automatique (${tot.manuel})</button>`:''}
+    ${S.canWrite&&tot.auto?`<button type="button" class="btn pri" data-act="confirmer-sem">${ic('pin')}Confirmer les ${plur(tot.auto,'proposition')}</button>`:''}
+  </div>
+  <div class="grid-wrap" data-keep="grid"><table class="grid"><caption class="vh">Qui fait quel site, jour par jour</caption><thead><tr><th class="c-site">Site · véhicule · responsable</th>${head}</tr></thead><tbody>${rows||'<tr><td colspan="8" style="padding:24px;text-align:center" class="muted">Aucun site. Ajoutez-les dans l\'onglet Sites.</td></tr>'}</tbody></table></div>`;
+}
+
+/* ---------- vue jour ---------- */
+function accTags(s){if(!s.acces)return'';return`<span class="tag">${accIcons(s)||ic('key',13)}<span>${esc(s.acces).replace(/(\d{3,})/g,'<b>$1</b>')}</span></span>`;}
+function consHTML(s){if(!s.consigne)return'';const wn=/ATTENTION|UNIQUEMENT|!!/.test(s.consigne);return`<p class="cons${wn?' warn':''}">${esc(s.consigne)}</p>`;}
+function stopHTML(s,a,d,f){
+  const pr=+s.priorite||3,done=!!f[s.id];let rep='';
+  if(a.kind==='sub'||a.kind==='auto'||(a.kind==='manuel'&&s.resp&&s.resp!==a.emp))rep=`<span class="chip ${a.kind==='auto'?'auto':a.kind==='sub'?'sub':'man'}">${s.resp&&S.emp.has(s.resp)?'remplace '+esc(nom(s.resp)):'attribué'}${a.kind==='auto'?' · à confirmer':''}</span>`;
+  return`<li class="stop${done?' done':''}"><button type="button" class="chk" role="checkbox" aria-checked="${done}" data-act="fait" data-site="${esc(s.id)}" data-date="${d}" aria-label="${esc(s.nom)} : fait"${S.canWrite?'':' disabled'}>${ic('check',18)}</button><div class="stop-b"><div class="stop-t"><span class="pt p${pr}">${PRIOS[pr].c}</span><strong>${esc(s.nom)}</strong>${s.vehicule?`<span class="veh">${esc(s.vehicule)}</span>`:''}${rep}${done?`<span class="fait">${ic('check',12)}${esc(f[s.id].h||'')}</span>`:''}</div>${s.acces?`<div class="tags">${accTags(s)}</div>`:''}${consHTML(s)}</div><button type="button" class="btn icon sm" data-act="cell" data-site="${esc(s.id)}" data-date="${d}" aria-label="Changer la personne pour ${esc(s.nom)}">${ic('dots')}</button></li>`;}
+function vJour(){
+  const d=S.day,today=todayISO(),plan=planDay(d),jour=S.jours.get(d)||{},f=jour.fait||{};
+  const tours=new Map(),vides=[],dem=[];
+  for(const s of sitesTries()){const a=plan.get(s.id);if(a.emp){if(!tours.has(a.emp))tours.set(a.emp,[]);tours.get(a.emp).push([s,a]);}else if(a.kind==='vide'||a.kind==='libre')vides.push([s,a]);else if(a.kind==='demande')dem.push([s,a]);}
+  const pers=empTries().filter(e=>tours.has(e.id));const moi=S.moi&&S.emp.has(S.moi)?S.moi:'';
+  const meters=[1,2,3].map(pr=>{let t=0,n=0;for(const s of sitesTries()){if((+s.priorite||3)!==pr)continue;const a=plan.get(s.id);if(a.kind==='hors'||a.kind==='demande')continue;t++;if(f[s.id])n++;}return`<div class="meter p${pr}"><div class="meter-h"><b>${PRIOS[pr].l}</b><span>${n}/${t}</span></div><div class="tr"><i style="width:${t?Math.round(n/t*100):0}%"></i></div></div>`;}).join('');
+  let cards='';
+  if(vides.length&&!moi)cards+=`<section class="tour alerte"><header class="tour-h"><span class="av">${ic('alert',16)}</span><div class="gr"><h3>Sans personne</h3><p>${plur(vides.length,'site')} à attribuer pour ce jour</p></div></header><ol class="stops">${vides.map(([s,a])=>stopHTML(s,a,d,f)).join('')}</ol></section>`;
+  for(const e of pers){if(moi&&e.id!==moi)continue;const L=tours.get(e.id),et=etat(e.id,d);
+    const vs=[...new Set(L.map(([s])=>s.vehicule).filter(Boolean))].join(' · '),nf=L.filter(([s])=>f[s.id]).length;
+    cards+=`<section class="tour"><header class="tour-h"><span class="av">${esc(initiales(e.nom))}</span><div class="gr"><h3>${esc(e.nom)}</h3><p>${esc(vs||'—')} · ${plur(L.length,'site')}${nf?' · '+plur(nf,'fait')+'':''}${et.piquet?' · de piquet':''}</p></div><button type="button" class="btn sm" data-act="copier" data-emp="${esc(e.id)}" title="Copier la tournée pour l'envoyer par message">${ic('copy',14)}Copier</button></header><ol class="stops">${L.map(([s,a])=>stopHTML(s,a,d,f)).join('')}</ol></section>`;}
+  if(moi&&!tours.has(moi))cards+=`<div class="empty"><h2 class="h2">Aucun site pour ${esc(nom(moi))}</h2><p>${etat(moi,d).absent?'Absence enregistrée ce jour : '+esc((TYPES[etat(moi,d).absent.type]||TYPES.autre).l)+'.':'Aucune tournée prévue ce jour.'}</p></div>`;
+  if(dem.length&&!moi)cards+=`<section class="tour"><header class="tour-h"><span class="av">+</span><div class="gr"><h3>Sur demande</h3><p>Hors tournée tant que personne n'est désigné pour ce jour</p></div></header><ol class="stops">${dem.map(([s,a])=>`<li class="stop"><span></span><div class="stop-b"><div class="stop-t"><span class="pt p${+s.priorite||3}">${PRIOS[+s.priorite||3].c}</span><strong>${esc(s.nom)}</strong></div>${consHTML(s)}</div><button type="button" class="btn sm" data-act="cell" data-site="${esc(s.id)}" data-date="${d}">Désigner</button></li>`).join('')}</ol></section>`;
+  return`<div class="tools">
+    <h1 class="h1"><small>Feuille de route${d===today?' · aujourd\'hui':''}</small>${fLong(d)}</h1><span class="sp"></span>
+    <div class="navg"><button type="button" class="btn icon" data-act="day-nav" data-v="-1" aria-label="Jour précédent"${d<=SAISON.du?' disabled':''}>${ic('chevL')}</button><button type="button" class="btn" data-act="day-today">Aujourd'hui</button><button type="button" class="btn icon" data-act="day-nav" data-v="1" aria-label="Jour suivant"${d>=SAISON.au?' disabled':''}>${ic('chevR')}</button></div>
+    <label class="vh" for="jour-date">Date</label><input class="in" type="date" id="jour-date" data-chg="jour-date" min="${SAISON.du}" max="${SAISON.au}" value="${d}">
+  </div>
+  <div class="tools">
+    <label class="vh" for="moi">Afficher la tournée de</label>
+    <select class="in" id="moi" data-chg="moi"><option value="">Toute l'équipe</option>${empTries().filter(e=>e.actif!==false&&e.role!=='Responsable').map(e=>`<option value="${esc(e.id)}"${e.id===moi?' selected':''}>Tournée ${esc(de(e.nom))}${tours.has(e.id)?'':' (aucun site)'}</option>`).join('')}</select>
+    <span class="sp"></span>
+    <span class="muted">Intervention du jour</span>
+    <div class="seg" role="group" aria-label="Type d'intervention">${Object.keys(INTERV).map(k=>`<button type="button" data-act="type" data-v="${k}" aria-pressed="${(jour.type||'')===k}"${S.canWrite?'':' disabled'}>${INTERV[k]}</button>`).join('')}</div>
+  </div>
+  <div class="meters">${meters}</div>
+  <div class="tours">${cards||'<div class="empty"><p>Aucun site à traiter ce jour.</p></div>'}</div>`;
+}
+function texteTournee(id,d){const plan=planDay(d),L=['Tournée '+de(nom(id))+' – '+fLong(d)];let cur=0;
+  for(const s of sitesTries()){const a=plan.get(s.id);if(a.emp!==id)continue;const pr=+s.priorite||3;if(pr!==cur){cur=pr;L.push('',PRIOS[pr].l.toUpperCase());}
+    let t='• '+s.nom+(s.vehicule?' ('+s.vehicule+')':'');const ex=[s.acces,s.consigne].filter(Boolean).join(' – ');if(ex)t+=' : '+ex;if(s.resp&&s.resp!==id&&S.emp.has(s.resp))t+=' [remplace '+nom(s.resp)+']';L.push(t);}
+  return L.join('\n');}
+
+/* ---------- vue équipe ---------- */
+const NJ=diff(SAISON.du,SAISON.au)+1;
+function saisonMois(){const out=[];let d=SAISON.du;while(d<=SAISON.au){const p=parts(d);const fin=di(Date.UTC(p.y,p.m+1,0));const e=fin<SAISON.au?fin:SAISON.au;out.push({m:p.m,y:p.y,i:diff(SAISON.du,d),n:diff(d,e)+1});d=add(e,1);}return out;}
+const WE_BG=(()=>{const s0=dow(SAISON.du),st=[];for(let k=0;k<7;k++){const c=(s0+k)%7>=5?'var(--surface-2)':'transparent';st.push(`${c} ${(k/7*100).toFixed(3)}% ${((k+1)/7*100).toFixed(3)}%`);}return`background-image:linear-gradient(90deg,${st.join(',')});background-size:${(7/NJ*100).toFixed(4)}% 100%`;})();
+function vEquipe(){
+  const mois=saisonMois(),today=todayISO();
+  const lines=mois.slice(1).map(m=>`<i class="mline" style="left:${(m.i/NJ*100).toFixed(3)}%"></i>`).join('')+(inS(today)?`<i class="tline" style="left:${((diff(SAISON.du,today)+.5)/NJ*100).toFixed(3)}%"></i>`:'');
+  let tl=`<div class="tl-name hd">Employé</div><div class="tl-months">${mois.map(m=>`<div style="width:${(m.n/NJ*100).toFixed(3)}%">${MOIS[m.m]} ${m.y}</div>`).join('')}</div>`;
+  const stat=new Map();
+  for(const role of ROLES){const L=empTries().filter(e=>(ROLES.includes(e.role)?e.role:'Chauffeur')===role);if(!L.length)continue;
+    tl+=`<div class="tl-grp"><span>${{Chauffeur:'Chauffeurs','Remplaçant':'Remplaçants','À pied':'À pied',Responsable:'Encadrement'}[role]}</span></div>`;
+    for(const e of L){let bars='',jp=0,ja=0;
+      for(const a of(absIdx().get(e.id)||[])){const du=a.du<SAISON.du?SAISON.du:a.du,au0=a.au||a.du,au=au0>SAISON.au?SAISON.au:au0;if(au<du)continue;const n=diff(du,au)+1,t=TYPES[a.type]?a.type:'autre';
+        if(TYPES[t].abs)ja+=n;else jp+=n;
+        bars+=`<button type="button" class="ab t-${t}${a.exemple?' ex':''}" style="left:${(diff(SAISON.du,du)/NJ*100).toFixed(3)}%;width:${(n/NJ*100).toFixed(3)}%" data-act="abs-edit" data-id="${esc(a.id)}" title="${esc(TYPES[t].l)} · ${fPlage(a.du,a.au)}${a.note?' · '+esc(a.note):''}" aria-label="${esc(e.nom)} : ${esc(TYPES[t].l)} ${fPlage(a.du,a.au)}">${n>=9?esc(TYPES[t].l.split(' ')[0]):n>=2?TYPES[t].c:''}</button>`;}
+      stat.set(e.id,{jp,ja});
+      tl+=`<div class="tl-name${e.actif===false?' off':''}"><b>${esc(e.nom)}</b><span>${esc(e.vehicule||e.role||'')}</span></div><div class="tl-track" data-emp="${esc(e.id)}" style="${WE_BG}">${lines}${bars}</div>`;}}
+  const nb=new Map();for(const s of S.sites.values()){if(s.resp){const x=nb.get(s.resp)||[0,0];x[0]++;nb.set(s.resp,x);}for(const r of(s.remplacants||[])){const x=nb.get(r)||[0,0];x[1]++;nb.set(r,x);}}
+  const rows=empTries().map(e=>{const n=nb.get(e.id)||[0,0],t=stat.get(e.id)||{jp:0,ja:0};
+    return`<div class="lrow erow${e.actif===false?' off':''}"><div><strong>${esc(e.nom)}</strong>${e.actif===false?' <span class="muted">(inactif)</span>':''}</div><div><span class="k">Rôle</span>${esc(e.role||'')}</div><div><span class="k">Véhicule</span>${e.vehicule?`<span class="veh">${esc(e.vehicule)}</span>`:'<span class="muted">—</span>'}</div><div><span class="k">Téléphone</span>${e.tel?`<span class="mono">${esc(e.tel)}</span> <button type="button" class="btn icon sm" data-act="copy" data-v="${esc(e.tel)}" aria-label="Copier le numéro ${de(esc(e.nom))}">${ic('copy',14)}</button>`:'<span class="muted">—</span>'}</div><div><span class="k">Sites</span>${n[0]} resp. · ${n[1]} rempl.</div><div><span class="k">Saison</span>${t.jp} j piquet · ${t.ja} j absent</div><div class="act">${S.canWrite?`<button type="button" class="btn sm" data-act="emp-edit" data-id="${esc(e.id)}">${ic('edit',14)}Modifier</button>`:''}</div></div>`;}).join('');
+  return`${exemples()}
+  <div class="tools"><h1 class="h1"><small>Du 15 novembre 2026 au 15 mars 2027</small>Équipe, piquets et absences</h1><span class="sp"></span>${S.canWrite?`<button type="button" class="btn pri" data-act="abs-new">${ic('plus')}Absence ou piquet</button><button type="button" class="btn" data-act="emp-new">${ic('plus')}Employé</button>`:''}</div>
+  <div class="legend">${Object.keys(TYPES).map(k=>`<span class="it"><span class="sw t-${k}"></span>${TYPES[k].l}</span>`).join('')}<span class="it muted">${S.canWrite?'Glissez sur une ligne pour créer une période, cliquez sur une barre pour la modifier.':''}</span></div>
+  <div class="tl-wrap" data-keep="tl"><div class="tl">${tl}</div></div>
+  <h2 class="h2">${plur(S.emp.size,'employé')}</h2>
+  <div class="list"><div class="lrow erow hd"><div>Nom</div><div>Rôle</div><div>Véhicule</div><div>Téléphone</div><div>Sites</div><div>Saison</div><div></div></div>${rows||'<div class="lrow"><span class="muted">Aucun employé pour l\'instant. Ajoutez le premier avec le bouton « Employé ».</span></div>'}</div>`;
+}
+
+/* ---------- vue sites ---------- */
+function sitesFiltres(){const q=S.q.trim().toLowerCase();return sitesTries().filter(s=>{
+  if(S.fp===9){if(s.resp&&S.emp.has(s.resp))return false;}else if(S.fp&&(+s.priorite||3)!==S.fp)return false;
+  if(!q)return true;return[s.nom,s.vehicule,nom(s.resp),s.acces,s.consigne].join(' ').toLowerCase().includes(q);});}
+function sitesList(){const L=sitesFiltres();let h='';
+  for(const pr of[1,2,3]){const g=L.filter(s=>(+s.priorite||3)===pr);if(!g.length)continue;
+    h+=`<div class="lrow g p${pr}">${PRIOS[pr].l} · ${plur(g.length,'site')}</div>`;
+    for(const s of g){const r=s.resp&&S.emp.has(s.resp),subs=(s.remplacants||[]).filter(i=>S.emp.has(i)).map(nom);
+      h+=`<div class="lrow srow"><div><strong>${esc(s.nom)}</strong>${s.surDemande?' <span class="chip neu">sur demande</span>':''}${isDate(s.du)||isDate(s.au)?` <span class="chip neu">${isDate(s.du)?'dès le '+fNum(s.du):''}${isDate(s.au)?' jusqu\'au '+fNum(s.au):''}</span>`:''}</div><div><span class="k">Véhicule</span>${s.vehicule?`<span class="veh">${esc(s.vehicule)}</span>`:'<span class="muted">—</span>'}</div><div><span class="k">Responsable</span>${r?esc(nom(s.resp)):(s.surDemande?'<span class="muted">—</span>':'<span class="chip vide">à attribuer</span>')}</div><div><span class="k">Remplaçants</span>${subs.length?esc(subs.join(', ')):'<span class="muted">aucun désigné</span>'}</div><div>${s.acces?`<div class="tags" style="margin:0">${accTags(s)}</div>`:''}${consHTML(s)}</div><div class="act">${S.canWrite?`<button type="button" class="btn sm" data-act="site-edit" data-id="${esc(s.id)}">${ic('edit',14)}Modifier</button>`:''}</div></div>`;}}
+  return h||'<div class="lrow"><span class="muted">Aucun site ne correspond.</span></div>';}
+function vSites(){const sans=[...S.sites.values()].filter(s=>!(s.resp&&S.emp.has(s.resp))).length;
+  return`<div class="tools"><h1 class="h1"><small>${plur(S.sites.size,'site')}</small>Sites, priorités et impératifs</h1><span class="sp"></span>${S.canWrite?`<button type="button" class="btn pri" data-act="site-new">${ic('plus')}Site</button>`:''}</div>
+  <div class="tools"><label class="vh" for="q">Rechercher un site</label><input class="in" type="search" id="q" data-inp="q" placeholder="Rechercher un site, un chauffeur, un code…" value="${esc(S.q)}" style="flex:1 1 240px">
+    <div class="seg" role="group" aria-label="Filtrer">${[[0,'Tous'],[1,'Avant 05h00'],[2,'Avant 08h00'],[3,'Après 08h00'],[9,'Sans responsable ('+sans+')']].map(([v,l])=>`<button type="button" data-act="fp" data-v="${v}" aria-pressed="${S.fp===v}">${l}</button>`).join('')}</div></div>
+  <div class="list" id="sites-list"><div class="lrow srow hd"><div>Site</div><div>Véhicule</div><div>Responsable</div><div>Remplaçants</div><div>Accès et consignes</div><div></div></div>${sitesList()}</div>`;
+}
+
+/* ================= dialogues ================= */
+const dlg=$('#dlg');
+function openDlg(kind,data){S.dlg=Object.assign({kind},data||{});drawDlg();if(!dlg.open){try{dlg.showModal();}catch(e){dlg.setAttribute('open','');}}}
+function closeDlg(){S.dlg=null;if(dlg.open)dlg.close();}
+function drawDlg(){if(!S.dlg)return;const b=$('.dlg-b',dlg),st=b?b.scrollTop:0;dlg.innerHTML=DLG[S.dlg.kind](S.dlg);const nb=$('.dlg-b',dlg);if(nb)nb.scrollTop=st;}
+const shell=(t,sub,bodyH,foot)=>`<div class="dlg-h"><div class="gr"><h2>${t}</h2>${sub?`<p>${sub}</p>`:''}</div><button type="button" class="btn icon sm" data-act="close" aria-label="Fermer">${ic('x')}</button></div><div class="dlg-b">${bodyH}</div>${foot?`<div class="dlg-f">${foot}</div>`:''}`;
+const formShell=(name,t,sub,bodyH,foot)=>`<form class="dlg-form" data-form="${name}" novalidate><div class="dlg-h"><div class="gr"><h2>${t}</h2>${sub?`<p>${sub}</p>`:''}</div><button type="button" class="btn icon sm" data-act="close" aria-label="Fermer">${ic('x')}</button></div><div class="dlg-b">${bodyH}<p class="err" id="form-err" hidden></p></div><div class="dlg-f">${foot}</div></form>`;
+const optEmp=(sel,vide)=>`<option value="">${vide}</option>`+empTries().map(e=>`<option value="${esc(e.id)}"${e.id===sel?' selected':''}>${esc(e.nom)}${e.actif===false?' (inactif)':''}</option>`).join('');
+const DLG={};
+DLG.cell=({site:sid,date,scope})=>{
+  const s=S.sites.get(sid);if(!s)return shell('Site supprimé','','<p>Ce site n\'existe plus.</p>');
+  const plan=planDay(date),a=plan.get(sid),resp=s.resp&&S.emp.has(s.resp)?S.emp.get(s.resp):null,f=((S.jours.get(date)||{}).fait||{})[sid];
+  let et;
+  if(a.absent)et=`<div class="box absent"><div><strong>${esc(resp.nom)}</strong> est absent : ${esc((TYPES[a.absent.type]||TYPES.autre).l)} (${fPlage(a.absent.du,a.absent.au)}).</div></div>`;
+  else if(resp)et=`<div class="box"><div>Responsable prévu : <strong>${esc(resp.nom)}</strong>, ${resp.actif===false?'inactif':'disponible'}.</div></div>`;
+  else et=`<div class="box"><div>${s.surDemande?'Site sur demande : il n\'entre dans une tournée que si vous désignez quelqu\'un pour ce jour.':'Aucun responsable prévu pour ce site.'}</div></div>`;
+  let dec='';
+  if(a.kind==='auto')dec=`<div class="box auto"><div>${ic('spark',14)} Proposition : <strong>${esc(nom(a.emp))}</strong> (${esc(a.why.join(', '))}).</div>${S.canWrite?`<div><button type="button" class="btn pri sm" data-act="choisir" data-emp="${esc(a.emp)}">${ic('pin',14)}Confirmer ${esc(nom(a.emp))}</button></div>`:''}</div>`;
+  else if(a.kind==='sub')dec=`<div class="box"><div>${ic('swap',14)} <strong>${esc(nom(a.emp))}</strong> est le remplaçant désigné de ce site et il est disponible.</div></div>`;
+  else if(a.kind==='manuel')dec=`<div class="box"><div>${ic('pin',14)} <strong>${esc(nom(a.emp))}</strong> a été choisi à la main${a.conflit?' — <span class="err">attention, cette personne est absente ce jour</span>':''}.</div>${S.canWrite?`<div><button type="button" class="btn sm" data-act="choisir" data-emp="">Revenir à l'automatique</button></div>`:''}</div>`;
+  else if(a.kind==='vide')dec=`<div class="box absent"><div>${ic('alert',14)} Personne de disponible dans l'équipe ce jour. Choisissez quelqu'un ci-dessous ou modifiez une absence.</div></div>`;
+  else if(a.kind==='libre')dec=`<div class="box"><div>Désignez quelqu'un pour ce jour dans la liste, ou donnez un responsable fixe au site.</div>${S.canWrite?`<div><button type="button" class="btn sm" data-act="site-edit" data-id="${esc(sid)}">Donner un responsable au site</button></div>`:''}</div>`;`<div class="box"><div>Ce site est hors période à cette date${isDate(s.du)?' (dès le '+fNum(s.du)+')':''}${isDate(s.au)?' (jusqu\'au '+fNum(s.au)+')':''}.</div></div>`;
+  const multi=a.absent&&(a.absent.au||a.absent.du)>a.absent.du;
+  const port=multi&&S.canWrite?`<div class="seg" role="group" aria-label="Appliquer le choix"><button type="button" data-act="scope" data-v="jour" aria-pressed="${scope!=='absence'}">Ce jour seulement</button><button type="button" data-act="scope" data-v="absence" aria-pressed="${scope==='absence'}">Toute l'absence (${fPlage(a.absent.du,a.absent.au)})</button></div>`:'';
+  const subs=new Set(s.remplacants||[]);
+  const list=empTries().filter(e=>e.actif!==false).map(e=>{const x=etat(e.id,date),l=plan.load.get(e.id)||0,tags=[];let rank=e.role==='Remplaçant'?2:e.role==='Chauffeur'?3:4;
+    if(resp&&e.id===resp.id){tags.push('<span class="chip neu">Responsable prévu</span>');rank=0;}else if(subs.has(e.id)){tags.push('<span class="chip sub">Remplaçant désigné</span>');rank=1;}
+    if(a.kind==='auto'&&a.emp===e.id){tags.push('<span class="chip auto">Proposé</span>');rank=Math.min(rank,1.5);}
+    if(x.piquet)tags.push('<span class="chip okc">De piquet</span>');
+    return{e,x,l,tags,rank:x.absent?9:rank};}).sort((p,q)=>p.rank-q.rank||p.l-q.l||ord(p.e)-ord(q.e));
+  const cands=list.map(({e,x,l,tags})=>`<button type="button" class="cand" data-act="choisir" data-emp="${esc(e.id)}" aria-pressed="${a.emp===e.id}"${x.absent||!S.canWrite?' disabled':''}><span><b>${esc(e.nom)}</b> <span class="muted">· ${esc(e.role||'')}${e.vehicule?' · '+esc(e.vehicule):''}</span></span><span class="r">${x.absent?esc((TYPES[x.absent.type]||TYPES.autre).l)+' jusqu\'au '+fDM(x.absent.au||x.absent.du):(l?plur(l,'site')+' ce jour':'libre ce jour')}</span>${tags.length?`<span class="t">${tags.join('')}</span>`:''}</button>`).join('');
+  const info=(s.acces||s.consigne)?`<div class="box">${s.acces?`<div class="tags" style="margin:0">${accTags(s)}</div>`:''}${consHTML(s)}</div>`:'';
+  const pr=+s.priorite||3;
+  return shell(esc(s.nom),`${fLong(date)} · ${PRIOS[pr].l}${s.vehicule?' · véhicule '+esc(s.vehicule):''}`,
+    `${et}${dec}${info}<div class="tools"><h3 class="h2">Qui s'en charge ?</h3><span class="sp"></span>${port}</div><div class="cands">${cands||'<p class="muted">Aucun employé actif.</p>'}</div>`,
+    `${S.canWrite&&a.kind!=='hors'&&a.kind!=='demande'?`<button type="button" class="btn" data-act="fait" data-site="${esc(sid)}" data-date="${date}">${f?'Annuler « fait » ('+esc(f.h||'')+')':ic('check')+'Marquer comme fait'}</button>`:''}<span class="sp"></span><button type="button" class="btn pri" data-act="close">Fermer</button>`);
+};
+function impactHTML(emp,type,du,au,ignore){
+  if(!emp||!isDate(du))return'Choisissez un employé et une date pour voir l\'effet sur les tournées.';
+  au=isDate(au)?au:du;if(au<du)return'<span class="err">La date de fin précède la date de début.</span>';
+  if(!(TYPES[type]||TYPES.autre).abs)return'Un piquet ne retire personne des tournées : la personne passe en tête des propositions de remplacement ces jours-là.';
+  const a=du<SAISON.du?SAISON.du:du,b=au>SAISON.au?SAISON.au:au;if(b<a)return'Cette période est en dehors de la saison.';
+  const saved=S.abs,m=new Map(saved);if(ignore)m.delete(ignore);m.set('__h',{id:'__h',emp,type,du,au});S.abs=m;bump();
+  const c={sub:0,auto:0,manuel:0,vide:0},st=new Set();let nj=0;
+  for(let d=a;d<=b;d=add(d,1)){nj++;for(const x of planDay(d).values()){if((S.sites.get(x.site)||{}).resp===emp&&c[x.kind]!==undefined){c[x.kind]++;st.add(x.site);}}}
+  S.abs=saved;bump();
+  if(!st.size)return`${esc(nom(emp))} n'est responsable d'aucun site actif sur cette période : aucune tournée n'est touchée.`;
+  return`<strong>${plur(st.size,'site')} sur ${plur(nj,'jour')}</strong> à couvrir pendant l'absence ${de(esc(nom(emp)))}.<div class="pills" style="margin-top:6px">${c.sub?`<span class="chip sub">${ic('swap',13)}${c.sub} par un remplaçant désigné</span>`:''}${c.manuel?`<span class="chip man">${ic('pin',13)}${c.manuel} déjà choisis</span>`:''}${c.auto?`<span class="chip auto">${ic('spark',13)}${c.auto} proposés automatiquement</span>`:''}${c.vide?`<span class="chip vide">${ic('alert',13)}${c.vide} sans personne</span>`:'<span class="chip okc">'+ic('check',13)+'tout est couvert</span>'}</div>`;}
+DLG.abs=x=>{const a=x.id?S.abs.get(x.id)||{}:x;
+  return formShell('abs',x.id?'Modifier la période':'Nouvelle absence ou piquet','Le planning se recalcule dès l\'enregistrement.',
+  `<div class="row2"><label class="fld"><span>Employé</span><select class="in" name="emp" id="abs-emp" required>${optEmp(a.emp||'','Choisir…')}</select></label>
+   <label class="fld"><span>Type</span><select class="in" name="type" id="abs-type">${Object.keys(TYPES).map(k=>`<option value="${k}"${(a.type||'vacances')===k?' selected':''}>${TYPES[k].l}</option>`).join('')}</select></label></div>
+   <div class="row2"><label class="fld"><span>Du</span><input class="in" type="date" name="du" id="abs-du" value="${esc(a.du||'')}" required></label>
+   <label class="fld"><span>Au (vide = un seul jour)</span><input class="in" type="date" name="au" id="abs-au" value="${esc(a.au||'')}"></label></div>
+   <label class="fld"><span>Remarque</span><input class="in" type="text" name="note" id="abs-note" value="${esc(a.note||'')}" maxlength="120"></label>
+   <div class="impact" id="abs-impact">${impactHTML(a.emp,a.type||'vacances',a.du,a.au,x.id)}</div>`,
+  `${x.id?`<button type="button" class="btn danger" data-act="del" data-col="absences" data-id="${esc(x.id)}">Supprimer</button>`:''}<span class="sp"></span><button type="button" class="btn" data-act="close">Annuler</button><button type="submit" class="btn pri">Enregistrer</button>`);};
+DLG.emp=x=>{const e=x.id?S.emp.get(x.id)||{}:{actif:true,role:'Remplaçant'};const n=x.id?[...S.sites.values()].filter(s=>s.resp===x.id).length:0;
+  return formShell('emp',x.id?'Modifier l\'employé':'Nouvel employé',x.id&&n?`Responsable de ${plur(n,'site')}.`:'Il sera aussitôt disponible dans les listes et les propositions.',
+  `<label class="fld"><span>Nom / prénom</span><input class="in" type="text" name="nom" id="emp-nom" value="${esc(e.nom||'')}" required maxlength="60"></label>
+   <div class="row2"><label class="fld"><span>Rôle</span><select class="in" name="role" id="emp-role">${ROLES.map(r=>`<option${e.role===r?' selected':''}>${r}</option>`).join('')}</select></label>
+   <label class="fld"><span>Véhicule habituel</span><input class="in" type="text" name="vehicule" id="emp-veh" value="${esc(e.vehicule||'')}" maxlength="30"></label></div>
+   <label class="fld"><span>Téléphone</span><input class="in" type="tel" name="tel" id="emp-tel" value="${esc(e.tel||'')}" maxlength="30"></label>
+   <label class="ck"><input type="checkbox" name="actif" id="emp-actif"${e.actif!==false?' checked':''}><span>Actif cette saison (un employé inactif n'est jamais proposé)</span></label>
+   <p class="muted">Rôle « Remplaçant » : proposé en premier quand un responsable est absent. « Responsable » : encadrement, jamais proposé sur une tournée.</p>`,
+  `${x.id?`<button type="button" class="btn danger" data-act="del" data-col="employes" data-id="${esc(x.id)}">Supprimer</button>`:''}<span class="sp"></span><button type="button" class="btn" data-act="close">Annuler</button><button type="submit" class="btn pri">Enregistrer</button>`);};
+DLG.site=x=>{const s=x.id?S.sites.get(x.id)||{}:{priorite:2};const r=s.remplacants||[];
+  if(!S.canWrite)return shell(esc(s.nom||'Site'),PRIOS[+s.priorite||3].l,`<div class="box"><div>Responsable : <strong>${s.resp&&S.emp.has(s.resp)?esc(nom(s.resp)):'aucun'}</strong>${r.length?' · remplaçants : '+esc(r.filter(i=>S.emp.has(i)).map(nom).join(', ')):''}</div>${s.acces?`<div class="tags" style="margin:0">${accTags(s)}</div>`:''}${consHTML(s)}</div>`,`<button type="button" class="btn pri" data-act="close">Fermer</button>`);
+  return formShell('site',x.id?'Modifier le site':'Nouveau site','Le responsable est prévu par défaut ; les remplaçants sont essayés dans l\'ordre s\'il est absent.',
+  `<label class="fld"><span>Nom du site</span><input class="in" type="text" name="nom" id="site-nom" value="${esc(s.nom||'')}" required maxlength="80"></label>
+   <div class="row2"><label class="fld"><span>Échéance</span><select class="in" name="priorite" id="site-prio">${[1,2,3].map(p=>`<option value="${p}"${(+s.priorite||3)===p?' selected':''}>${PRIOS[p].l}</option>`).join('')}</select></label>
+   <label class="fld"><span>Véhicule / matériel</span><input class="in" type="text" name="vehicule" id="site-veh" value="${esc(s.vehicule||'')}" maxlength="30" list="veh-list"><datalist id="veh-list">${[...new Set([...S.sites.values(),...S.emp.values()].map(o=>o.vehicule).filter(Boolean))].sort().map(v=>`<option value="${esc(v)}"></option>`).join('')}</datalist></label></div>
+   <label class="fld"><span>Responsable prévu</span><select class="in" name="resp" id="site-resp">${optEmp(s.resp||'','Aucun')}</select></label>
+   <div class="row2"><label class="fld"><span>Remplaçant 1</span><select class="in" name="r1" id="site-r1">${optEmp(r[0]||'','Aucun')}</select></label>
+   <label class="fld"><span>Remplaçant 2</span><select class="in" name="r2" id="site-r2">${optEmp(r[1]||'','Aucun')}</select></label></div>
+   <label class="fld"><span>Accès (clé, badge, code)</span><input class="in" type="text" name="acces" id="site-acces" value="${esc(s.acces||'')}" maxlength="80"></label>
+   <label class="fld"><span>Impératifs et consignes</span><textarea class="in" name="consigne" id="site-cons" rows="3" maxlength="400">${esc(s.consigne||'')}</textarea></label>
+   <div class="row2"><label class="fld"><span>Actif à partir du (facultatif)</span><input class="in" type="date" name="du" id="site-du" value="${esc(s.du||'')}"></label>
+   <label class="fld"><span>Jusqu'au (facultatif)</span><input class="in" type="date" name="au" id="site-au" value="${esc(s.au||'')}"></label></div>
+   <label class="ck"><input type="checkbox" name="surDemande" id="site-dem"${s.surDemande?' checked':''}><span>Sur demande uniquement (hors tournée par défaut)</span></label>`,
+  `${x.id?`<button type="button" class="btn danger" data-act="del" data-col="sites" data-id="${esc(x.id)}">Supprimer</button>`:''}<span class="sp"></span><button type="button" class="btn" data-act="close">Annuler</button><button type="submit" class="btn pri">Enregistrer</button>`);};
+DLG.contacts=()=>{const c=S.reg.get('contacts')||{},L=Array.isArray(c.liste)?c.liste:[];
+  return shell('Contacts généraux','Numéros à appeler pendant le service hivernal',
+  `${L.length?`<div>${L.map(p=>`<div class="contact"><div class="gr"><strong>${esc(p.nom)}</strong><div class="mono">${esc(p.tel)}</div></div><button type="button" class="btn sm" data-act="copy" data-v="${esc(p.tel)}">${ic('copy',14)}Copier</button></div>`).join('')}</div>`:'<p class="muted">Aucun contact enregistré.</p>'}${c.consigne?`<div class="cons warn" style="margin:0"><strong>Consigne.</strong> ${esc(c.consigne)}</div>`:''}`,
+  `<button type="button" class="btn pri" data-act="close">Fermer</button>`);};
+DLG.texte=({t})=>shell('Tournée à copier','Sélectionnez le texte puis copiez-le.',`<pre class="copy">${esc(t)}</pre>`,`<button type="button" class="btn pri" data-act="close">Fermer</button>`);
+
+/* ================= actions ================= */
+function joursAbsence(sid,date){const a=planDay(date).get(sid);if(!a||!a.absent)return[date];const out=[];const du=a.absent.du<SAISON.du?SAISON.du:a.absent.du,au0=a.absent.au||a.absent.du,au=au0>SAISON.au?SAISON.au:au0;for(let d=du;d<=au;d=add(d,1))out.push(d);return out;}
+async function assigner(sid,date,emp,scope){
+  const days=scope==='absence'?joursAbsence(sid,date):[date];let n=0;
+  for(const d of days){if(emp&&d!==date&&!dispo(emp,d))continue;if(!(await w(patchJour(d,{choix:{[sid]:emp||null}}))))return;n++;}
+  toast(emp?(n>1?nom(emp)+' : '+n+' jours attribués':nom(emp)+' attribué'):'Retour à l\'attribution automatique');}
+function setWeek(l){S.week=l<WK0?WK0:l>WKN?WKN:l;sched();}
+function setDay(d){S.day=d<SAISON.du?SAISON.du:d>SAISON.au?SAISON.au:d;sched();}
+function refDay(){const t=todayISO();return t<SAISON.du?SAISON.du:t>SAISON.au?SAISON.au:t;}
+function copier(t,ok){const fb=()=>openDlg('texte',{t});try{navigator.clipboard.writeText(t).then(()=>toast(ok),fb);}catch(e){fb();}}
+const ACT={
+  close:()=>closeDlg(),
+  contacts:()=>openDlg('contacts'),
+  week:d=>setWeek(d.w),
+  'week-nav':d=>setWeek(add(S.week,7*+d.v)),
+  'week-today':()=>setWeek(monday(refDay())),
+  'day-nav':d=>setDay(add(S.day,+d.v)),
+  'day-today':()=>setDay(refDay()),
+  'go-jour':d=>{S.day=d.date;location.hash='#jour';},
+  cell:d=>openDlg('cell',{site:d.site,date:d.date,scope:'jour'}),
+  scope:d=>{if(S.dlg){S.dlg.scope=d.v;drawDlg();}},
+  choisir:d=>{if(S.dlg&&S.canWrite)assigner(S.dlg.site,S.dlg.date,d.emp||'',d.emp?S.dlg.scope:S.dlg.scope);},
+  fait:async d=>{if(!S.canWrite)return;const cur=((S.jours.get(d.date)||{}).fait||{})[d.site],a=planDay(d.date).get(d.site);await w(patchJour(d.date,{fait:{[d.site]:cur?null:{h:heure(),par:(a&&a.emp)||''}}}));},
+  type:d=>{if(S.canWrite)w(patchJour(S.day,{type:d.v}));},
+  copier:d=>copier(texteTournee(d.emp,S.day),'Tournée copiée, prête à coller dans un message'),
+  copy:d=>copier(d.v,'Numéro copié'),
+  'confirmer-sem':async()=>{let n=0;for(let i=0;i<7;i++){const d=add(S.week,i);if(!inS(d))continue;const ch={};for(const a of planDay(d).values())if(a.kind==='auto'){ch[a.site]=a.emp;n++;}if(Object.keys(ch).length&&!(await w(patchJour(d,{choix:ch}))))return;}toast(plur(n,'proposition')+' '+(n>1?'confirmées':'confirmée'));},
+  'reset-sem':async(d,btn)=>{if(!btn.dataset.armed){btn.dataset.armed='1';btn.textContent='Confirmer le retour à l\'automatique';return;}for(let i=0;i<7;i++){const day=add(S.week,i),ch=(S.jours.get(day)||{}).choix||{},p={};for(const k in ch)if(ch[k])p[k]=null;if(Object.keys(p).length&&!(await w(patchJour(day,{choix:p}))))return;}toast('Choix manuels de la semaine effacés');},
+  'suppr-ex':async(d,btn)=>{if(!btn.dataset.armed){btn.dataset.armed='1';btn.textContent='Confirmer la suppression';return;}for(const a of[...S.abs.values()])if(a.exemple&&!(await w(store.del('absences',a.id))))return;toast('Exemples supprimés');},
+  'abs-new':()=>openDlg('abs',{emp:'',type:'vacances',du:'',au:''}),
+  'abs-edit':d=>{if(S.canWrite)openDlg('abs',{id:d.id});},
+  'emp-new':()=>openDlg('emp',{}),
+  'emp-edit':d=>openDlg('emp',{id:d.id}),
+  'site-new':()=>openDlg('site',{}),
+  'site-edit':d=>openDlg('site',{id:d.id}),
+  fp:d=>{S.fp=+d.v;sched();},
+  del:async(d,btn)=>{if(!btn.dataset.armed){btn.dataset.armed='1';btn.textContent='Confirmer la suppression';return;}if(await w(store.del(d.col,d.id))){closeDlg();toast('Supprimé');}},
+};
+const fErr=m=>{const e=$('#form-err',dlg);if(e){e.textContent=m;e.hidden=false;}};
+const FORM={
+  abs:async fd=>{const emp=fd.get('emp'),du=fd.get('du'),au=fd.get('au')||du;if(!emp)return fErr('Choisissez un employé.');if(!isDate(du))return fErr('Indiquez la date de début.');if(au<du)return fErr('La date de fin précède la date de début.');
+    const id=S.dlg.id||store.newId('absences');if(await w(store.set('absences',id,{emp,type:fd.get('type'),du,au,note:String(fd.get('note')||'').trim()}))){closeDlg();toast('Période enregistrée');}},
+  emp:async fd=>{const n=String(fd.get('nom')||'').trim();if(!n)return fErr('Indiquez le nom.');const id=S.dlg.id||store.newId('employes'),cur=S.emp.get(id)||{};
+    const doc={nom:n,role:fd.get('role'),tel:String(fd.get('tel')||'').trim(),vehicule:String(fd.get('vehicule')||'').trim(),actif:fd.get('actif')==='on',ordre:cur.ordre??(Math.max(0,...[...S.emp.values()].map(e=>+e.ordre||0))+1)};
+    if(await w(store.set('employes',id,doc))){closeDlg();toast('Employé enregistré');}},
+  site:async fd=>{const n=String(fd.get('nom')||'').trim();if(!n)return fErr('Indiquez le nom du site.');const id=S.dlg.id||store.newId('sites'),cur=S.sites.get(id)||{};const du=fd.get('du')||'',au=fd.get('au')||'';if(du&&au&&au<du)return fErr('La fin de période précède le début.');
+    const resp=fd.get('resp')||'';const doc={nom:n,priorite:+fd.get('priorite'),ordre:cur.ordre??(Math.max(0,...[...S.sites.values()].map(e=>+e.ordre||0))+1),vehicule:String(fd.get('vehicule')||'').trim(),resp,remplacants:[...new Set([fd.get('r1'),fd.get('r2')].filter(v=>v&&v!==resp))],acces:String(fd.get('acces')||'').trim(),consigne:String(fd.get('consigne')||'').trim(),surDemande:fd.get('surDemande')==='on',du,au};
+    if(await w(store.set('sites',id,doc))){closeDlg();toast('Site enregistré');}},
+};
+document.addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(!b||b.disabled)return;const f=ACT[b.dataset.act];if(f)f(b.dataset,b);});
+document.addEventListener('submit',e=>{e.preventDefault();const f=FORM[e.target.dataset.form];if(f&&S.canWrite)f(new FormData(e.target));});
+document.addEventListener('change',e=>{const t=e.target,k=t.dataset&&t.dataset.chg;
+  if(k==='go-date'&&isDate(t.value))setWeek(monday(t.value));
+  else if(k==='jour-date'&&isDate(t.value))setDay(t.value);
+  else if(k==='moi'){S.moi=t.value;ls.set('moi',S.moi);sched();}});
+document.addEventListener('input',e=>{const t=e.target;
+  if(t.dataset&&t.dataset.inp==='q'){S.q=t.value;const l=$('#sites-list');if(l)l.innerHTML=l.firstElementChild.outerHTML+sitesList();}
+  const fm=t.closest&&t.closest('form[data-form="abs"]');if(fm){const fd=new FormData(fm),box=$('#abs-impact',dlg);if(box)box.innerHTML=impactHTML(fd.get('emp'),fd.get('type'),fd.get('du'),fd.get('au'),S.dlg&&S.dlg.id);}});
+dlg.addEventListener('close',()=>{S.dlg=null;});
+dlg.addEventListener('click',e=>{if(e.target===dlg)closeDlg();});
+document.addEventListener('keydown',e=>{if(dlg.open||e.altKey||e.ctrlKey||e.metaKey)return;const tg=e.target.tagName;if(tg==='INPUT'||tg==='SELECT'||tg==='TEXTAREA')return;
+  const s=e.key==='ArrowLeft'?-1:e.key==='ArrowRight'?1:0;if(!s)return;if(S.view==='semaine')setWeek(add(S.week,7*s));else if(S.view==='jour')setDay(add(S.day,s));});
+/* glisser sur la frise pour créer une période */
+let drag=null;
+const dayAt=(tr,x)=>{const r=tr.getBoundingClientRect();return Math.max(0,Math.min(NJ-1,Math.floor((x-r.left)/r.width*NJ)));};
+document.addEventListener('pointerdown',e=>{const tr=e.target.closest&&e.target.closest('.tl-track');if(!tr||!S.canWrite||e.target.closest('.ab')||e.button)return;
+  if(e.pointerType!=='mouse'){drag={tr,a:dayAt(tr,e.clientX),b:dayAt(tr,e.clientX),tap:true,x:e.clientX,y:e.clientY};return;}
+  const g=document.createElement('i');g.className='ghost';tr.appendChild(g);drag={tr,g,a:dayAt(tr,e.clientX),b:dayAt(tr,e.clientX)};drawGhost();e.preventDefault();});
+function drawGhost(){if(!drag||!drag.g)return;const a=Math.min(drag.a,drag.b),n=Math.abs(drag.a-drag.b)+1;drag.g.style.left=(a/NJ*100)+'%';drag.g.style.width=(n/NJ*100)+'%';}
+document.addEventListener('pointermove',e=>{if(!drag)return;if(drag.tap){if(Math.abs(e.clientX-drag.x)+Math.abs(e.clientY-drag.y)>10)drag=null;return;}drag.b=dayAt(drag.tr,e.clientX);drawGhost();});
+document.addEventListener('pointerup',()=>{if(!drag)return;const d=drag;drag=null;if(d.g)d.g.remove();const a=Math.min(d.a,d.b),b=Math.max(d.a,d.b);openDlg('abs',{emp:d.tr.dataset.emp,type:'vacances',du:add(SAISON.du,a),au:add(SAISON.du,b)});});
+document.addEventListener('pointercancel',()=>{if(drag&&drag.g)drag.g.remove();drag=null;});
+
+/* ================= démarrage ================= */
+function route(){const h=(location.hash||'').slice(1);S.view=VUES.includes(h)?h:'semaine';}
+window.addEventListener('hashchange',()=>{route();render();window.scrollTo(0,0);});
+const APPLY={employes:r=>{S.emp=new Map(r.map(x=>[x.id,x]));},sites:r=>{S.sites=new Map(r.map(x=>[x.id,x]));},absences:r=>{S.abs=new Map(r.map(x=>[x.id,x]));},jours:r=>{S.jours=new Map(r.map(x=>[x.id,x]));},reglages:r=>{S.reg=new Map(r.map(x=>[x.id,x]));}};
+function subscribe(){
+  const slowT=setTimeout(()=>{S.slow=true;sched();},10000);
+  for(const c in APPLY)store.watch(c,rows=>{APPLY[c](rows);S.loaded[c]=true;bump();if(Object.keys(APPLY).every(k=>S.loaded[k])){clearTimeout(slowT);S.slow=false;}sched();},
+    ()=>{S.loaded[c]=true;clearTimeout(slowT);toast('Une partie des données n\'a pas pu être chargée.');sched();});}
+async function boot(){
+  const t=todayISO();
+  S.day=refDay();S.week=t<SAISON.du?monday(add(SAISON.du,6)):monday(refDay());if(t<SAISON.du)S.day=S.week;
+  route();render();
+  if(window.claude&&typeof window.claude.use==='function'){
+    let db=null,user=null;
+    try{[db,user]=await Promise.all([window.claude.use('db'),window.claude.use('user')]);}catch(e){}
+    if(db){store=cloudStore(db);S.mode='cloud';let cw=null;try{cw=user?await user.can('data.write'):null;}catch(e){}S.canWrite=cw!==false;S.writeUnknown=cw===null;}
+    else{S.mode='off';S.canWrite=false;}
+  }else{store=localStore();S.mode='local';}
+  if(store)subscribe();
+  render();
+}
+boot();
+})();
+</script>
